@@ -59,8 +59,4 @@ export class MainPage {
     async getTotalDurationInSeconds() {
         return Number(await this.totalDuration.innerText());
     }
-
-    async isAddButtonVisible(index) {
-        return await this.trackList.nth(index).locator("button:has-text(\"+\")").isVisible();
-    }
 }
