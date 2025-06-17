@@ -4,7 +4,7 @@ export class MainPage {
     }
 
     get searchInput() {
-        return this.page.getByRole("textbox", {name: "Search"}).click();
+        return this.page.getByRole("textbox", {name: "Search"});
     }
 
     trackCheckBox(trackName) {
