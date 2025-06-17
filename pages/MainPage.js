@@ -4,7 +4,7 @@ export class MainPage {
     }
 
     get searchInput() {
-        return this.page.getByRole("textbox", {name: "Search"});
+        return this.page.getByRole("textbox", {name: "Search"}).click();
     }
 
     trackCheckBox(trackName) {
@@ -52,7 +52,7 @@ export class MainPage {
     }
 
     async goto() {
-        this.page.goto("/");
+        await this.page.goto("/");
     }
 
     async searchTrack(query) {
