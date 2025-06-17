@@ -60,7 +60,7 @@ export class MainPage {
     }
 
     async getFilteredTrackTitles() {
-        return this.page.locator("div.MuiGrid-container").allTextContents();
+        await this.page.locator("div.MuiGrid-container").allTextContents();
     }
 
     async getAllTracksTitles() {
@@ -79,7 +79,7 @@ export class MainPage {
         await this.removeButtonAt(index).click();
     }
 
-    async getTotalDuration() {
+    getTotalDuration() {
         return Number(this.totalDuration);
     }
 }
