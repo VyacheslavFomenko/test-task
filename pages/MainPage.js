@@ -1,4 +1,4 @@
-class MainPage {
+export class MainPage {
     constructor(page) {
         this.page = page;
     }
@@ -57,6 +57,10 @@ class MainPage {
 
     async searchTrack(query) {
         await this.searchInput.fill(query);
+    }
+
+    async getFilteredTrackTitles() {
+        return this.page.locator("div.MuiGrid-container").allTextContents();
     }
 
     async getAllTracksTitles() {
