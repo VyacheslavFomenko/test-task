@@ -11,25 +11,19 @@ test.describe("UI tests for search input ", () => {
     test("P: Search input should work correctly with valid data", async () => {
         await mainPage.searchTrack("breeze");
 
-        const filteredTracks = mainPage.getFilteredTrackTitles();
-        const count = await filteredTracks.count();
+        const results = await mainPage.getFilteredTrackTitles();
+        expect(results.length).toBeGreaterThan(0);
 
-        expect(count).toBeGreaterThan(0);
-
-        const titles = filteredTracks.locator(".MuiGrid-grid-xs-4 p");
-
-        for (let i = 0; i < count; i++) {
-            const title = await titles.nth(i).innerText();
+        for (const title of results) {
             expect(title.toLowerCase()).toContain("breeze");
         }
     });
 
     test("N: Error should be shown when there is no match", async ({page}) => {
         await mainPage.searchTrack("!@#qwerty");
-        const trackItems = mainPage.getFilteredTrackTitles();
-        const count = await trackItems.count();
+        const count = await mainPage.getFilteredTrackTitles();
 
-        expect(count).toBe(0);
+        expect(count.length).toBe(0);
         await expect(page.locator("text=Not found")).toBeVisible();
     });
 });
