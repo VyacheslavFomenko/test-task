@@ -59,8 +59,8 @@ export class MainPage {
         await this.searchInput.fill(query);
     }
 
-    async getFilteredTrackTitles() {
-        await this.page.locator("div.MuiGrid-container").allTextContents();
+    getFilteredTrackTitles() {
+        return this.page.locator('#tracklist .MuiGrid-container');
     }
 
     async getAllTracksTitles() {
