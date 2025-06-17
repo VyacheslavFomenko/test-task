@@ -4,47 +4,15 @@ export class MainPage {
     }
 
     get searchInput() {
-        return this.page.getByRole("textbox", {name: "Search"});
+        return this.page.locator("input[id=\":r0:\"]");
     }
 
-    trackCheckBox(trackName) {
-        return this.page.locator("div").filter({hasText: `/^${trackName}\+$/`}).locator("input[type='checkbox']");
+    get trackList() {
+        return this.page.locator("#tracklist .MuiGrid-container");
     }
 
-    get trackTitles() {
-        return this.page.locator("#traklist");
-    }
-
-    get trackDuration() {
-        return this.page.locator('p.MuiTypography-body1', {hasText: ':'});
-    }
-
-    get addButton() {
-        return this.page.locator("button:has-text('+')");
-    }
-
-    addButtonAt(index) {
-        return this.addButton.nth(index);
-    }
-
-    playlistCheckBox(trackName) {
-        return this.page.locator("div").filter({hasText: `/^${trackName}\+$/`}).locator("input[type='checkbox']");
-    }
-
-    get playlistTracksTitles() {
-        return this.page.locator("#playlist");
-    }
-
-    get playlistDuration() {
-        return this.page.locator('p.MuiTypography-body1', {hasText: ':'});
-    }
-
-    get removeButton() {
-        return this.page.locator("button:has-text('-')");
-    }
-
-    removeButtonAt(index) {
-        return this.removeButton.nth(index);
+    get playlist() {
+        return this.page.locator("#playlist .MuiGrid-container");
     }
 
     get totalDuration() {
@@ -59,27 +27,40 @@ export class MainPage {
         await this.searchInput.fill(query);
     }
 
-    getFilteredTrackTitles() {
-        return this.page.locator('#tracklist .MuiGrid-container');
-    }
-
-    async getAllTracksTitles() {
-        await this.trackTitles.allTextContents();
+    async getFilteredTrackTitles() {
+        const titles = this.trackList.locator(".MuiGrid-grid-xs-4 p");
+        const count = await titles.count();
+        const list = [];
+        for (let i = 0; i < count; i++) {
+            list.push(await titles.nth(i).innerText());
+        }
+        return list;
     }
 
     async addTrackByIndex(index) {
-        await this.addButtonAt(index).click();
+        const track = this.trackList.nth(index);
+        await track.locator("button:has-text(\"+\")").click();
     }
 
-    async getAllPlaylistTracksTitles() {
-        await this.playlistTracksTitles.allTextContents();
+    async getPlaylistTitles() {
+        const titles = this.playlist.locator(".MuiGrid-grid-xs-4 p");
+        const count = await titles.count();
+        const list = [];
+        for (let i = 0; i < count; i++) {
+            list.push(await titles.nth(i).innerText());
+        }
+        return list;
     }
 
-    async removeTrackByIndex(index) {
-        await this.removeButtonAt(index).click();
+    async getTrackDurationByIndex(index) {
+        return await this.trackList.nth(index).locator(".MuiGrid-grid-xs-2 p").innerText();
     }
 
-    getTotalDuration() {
-        return Number(this.totalDuration);
+    async getTotalDurationInSeconds() {
+        return Number(await this.totalDuration.innerText());
+    }
+
+    async isAddButtonVisible(index) {
+        return await this.trackList.nth(index).locator("button:has-text(\"+\")").isVisible();
     }
 }
