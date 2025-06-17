@@ -26,6 +26,10 @@ test.describe("UI tests for search input ", () => {
 
     test("N: Error should be shown when there is no match", async ({page}) => {
         await mainPage.searchTrack("!@#qwerty");
+        const trackItems = mainPage.getFilteredTrackTitles();
+        const count = await trackItems.count();
+
+        expect(count).toBe(0);
         await expect(page.locator("text=Not found")).toBeVisible();
     });
 });
