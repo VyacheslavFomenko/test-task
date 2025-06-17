@@ -15,4 +15,15 @@ test.describe("UI tests for add tracks to playlist", () => {
         const playlist = await mainPage.getPlaylistTitles();
         expect(playlist).toContain(title);
     });
+
+    test("N: Same track shouldn't be added twice", async ({ page }) => {
+        const [title] = await mainPage.getFilteredTrackTitles();
+        await mainPage.addTrackByIndex(0);
+        await mainPage.addTrackByIndex(0); // second attempt
+
+        const playlist = await mainPage.getPlaylistTitles();
+        const count = playlist.filter(t => t === title).length;
+
+        expect(count).toBe(1);
+    });
 });
