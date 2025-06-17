@@ -20,4 +20,8 @@ test.describe("UI tests for add tracks to playlist", () => {
         const actual = await mainPage.getTotalDurationInSeconds();
         expect(actual).toBe(expected);
     });
+
+    test("N: Total duration should be 0 when playlist is empty", async ({page}) => {
+        await expect(page.locator("text=No tracks on playlist")).toBeVisible();
+    });
 });
