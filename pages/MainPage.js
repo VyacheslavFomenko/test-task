@@ -50,4 +50,32 @@ class MainPage {
     get totalDuration() {
         return this.page.locator("#playlist-duration");
     }
+
+    async goto() {
+        this.page.goto("/");
+    }
+
+    async searchTrack(query) {
+        await this.searchInput.fill(query);
+    }
+
+    async getAllTracksTitles() {
+        await this.trackTitles.allTextContents();
+    }
+
+    async addTrackByIndex(index) {
+        await this.addButtonAt(index).click();
+    }
+
+    async getAllPlaylistTracksTitles() {
+        await this.playlistTracksTitles.allTextContents();
+    }
+
+    async removeTrackByIndex(index) {
+        await this.removeButtonAt(index).click();
+    }
+
+    async getTotalDuration() {
+        return Number(this.totalDuration);
+    }
 }
