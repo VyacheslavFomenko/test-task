@@ -11,7 +11,7 @@ class MainPage {
         return this.page.locator("div").filter({hasText: `/^${trackName}\+$/`}).locator("input[type='checkbox']");
     }
 
-    get trackTitle() {
+    get trackTitles() {
         return this.page.locator("#traklist");
     }
 
@@ -31,6 +31,10 @@ class MainPage {
         return this.page.locator("div").filter({hasText: `/^${trackName}\+$/`}).locator("input[type='checkbox']");
     }
 
+    get playlistTracksTitles() {
+        return this.page.locator("#playlist");
+    }
+
     get playlistDuration() {
         return this.page.locator('p.MuiTypography-body1', {hasText: ':'});
     }
@@ -40,7 +44,7 @@ class MainPage {
     }
 
     removeButtonAt(index) {
-        return this.addButton.nth(index);
+        return this.removeButton.nth(index);
     }
 
     get totalDuration() {
